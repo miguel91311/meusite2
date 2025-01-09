@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Filmes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 90%;
+      margin: auto;
+      padding: 20px;
+    }
+    .movie {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .movie img {
+      width: 100px;
+      height: 150px;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+    .movie-details {
+      max-width: calc(100% - 120px);
+    }
+    .movie-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .movie-description {
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Lista de Filmes</h1>
+    <div id="movies"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
