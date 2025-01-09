@@ -3,52 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Filmes</title>
+  <title>Meu Site de Filmes</title>
   <style>
+    /* Adicione alguns estilos básicos */
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       margin: 0;
       padding: 0;
+      background-color: #f4f4f4;
     }
-    .container {
-      width: 90%;
-      margin: auto;
-      padding: 20px;
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+    main {
+      padding: 2rem;
+    }
+    .movies {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
     }
     .movie {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-      background: white;
-      padding: 10px;
+      background: #fff;
+      border: 1px solid #ddd;
       border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 1rem;
+      text-align: center;
     }
     .movie img {
-      width: 100px;
-      height: 150px;
-      object-fit: cover;
-      margin-right: 20px;
-    }
-    .movie-details {
-      max-width: calc(100% - 120px);
-    }
-    .movie-title {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .movie-description {
-      font-size: 14px;
-      color: #555;
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Lista de Filmes</h1>
-    <div id="movies"></div>
-  </div>
-  <script src="script.js"></script>
+  <header>
+    <h1>Bem-vindo ao Meu Site de Filmes</h1>
+  </header>
+  <main>
+    <h2>Lista de Filmes</h2>
+    <div class="movies" id="movies">
+      <!-- Filmes serão carregados aqui dinamicamente -->
+    </div>
+  </main>
+  <script>
+    // Função para buscar os filmes da API
+    async function fetchMovies() {
+      try {
+        const response = await fetch('https://embed.smashystream.com/list.php?type=movie&page=1');
+        if (!response.ok) {
+          throw new Error(`Erro ao buscar filmes: ${response.status}`);
+        }
+        const movies = await response.json();
+        displayMovies(movies);
+      } catch (error) {
+        console.error('Erro:', error);
+        document.getElementById('movies').innerHTML = `<p>Não foi possível carregar os filmes. Tente novamente mais tarde.</p>`;
+      }
+    }
+
+    // Função para exibir os filmes na página
+    function displayMovies(movies) {
+      const moviesContainer = document.getElementById('movies');
+      moviesContainer.innerHTML = '';
+      movies.forEach(movie => {
+        const movieDiv = document.createElement('div');
+        movieDiv.classList.add('movie');
+        movieDiv.innerHTML = `
+          <img src="${movie.image || 'placeholder.jpg'}" alt="${movie.title}">
+          <h3>${movie.title}</h3>
+          <p>${movie.description || 'Descrição indisponível'}</p>
+        `;
+        moviesContainer.appendChild(movieDiv);
+      });
+    }
+
+    // Chama a função ao carregar a página
+    fetchMovies();
+  </script>
 </body>
 </html>
+
